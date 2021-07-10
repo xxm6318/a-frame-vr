@@ -75,20 +75,18 @@
   <div class="maskDiv"><img src="images/loading.svg" alt=""></div>
 </body>
 <script>
-  $('.maskDiv').css({zIndex:999})
-  var url = 'images/a1.jpg';
-  loadImage(url, function(){
-    $('#bg').attr('src', url)
-    $('.maskDiv').css({zIndex:-1})
-  })
+  init('images/a1.jpg');
   $('.thumb').on('click', 'div', function () {
     var url = 'images/a' + $(this).attr('data-id') + '.jpg';
-    $('.maskDiv').css({zIndex:999})
-    loadImage(url, function(){
-      $('#bg').attr('src', url)
-      $('.maskDiv').css({zIndex:-999})
-    })
+    init(url);
   })
+  function init(url){
+	 $('.maskDiv').css({zIndex:999})
+	 loadImage(url, function(){
+		$('#bg').attr('src', url)
+		$('.maskDiv').css({zIndex:-1})
+	 })
+  }
   function loadImage(url, callback) {
     var img = new Image(); //创建一个Image对象，实现图片的预下载
     img.src = url;
