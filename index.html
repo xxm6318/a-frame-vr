@@ -40,9 +40,10 @@
     .thumb div:hover {
       border: 1px solid rgb(92, 153, 245);
     }
-    .maskDiv{
+
+    .maskDiv {
       position: fixed;
-      top:0;
+      top: 0;
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
@@ -50,7 +51,8 @@
       justify-content: center;
       align-items: center;
     }
-    .maskDiv img{
+
+    .maskDiv img {
       width: 50px;
     }
   </style>
@@ -60,8 +62,8 @@
   <a-scene>
     <a-entity>
       <a-sky src="" rotation="0 -130 0" id="bg"></a-sky>
-      <a-text value="min.net.cn" width="10" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" position="-2.5 0.25 -1.5"
-        rotation="0 15 0" id="info"></a-text>
+      <a-text value="min.net.cn" width="10" font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+        position="-2.5 0.25 -1.5" rotation="0 15 0" id="info"></a-text>
     </a-entity>
     <a-animation attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite"></a-animation>
   </a-scene>
@@ -80,12 +82,12 @@
     var url = 'images/a' + $(this).attr('data-id') + '.jpg';
     init(url);
   })
-  function init(url){
-	 $('.maskDiv').css({zIndex:999})
-	 loadImage(url, function(){
-		$('#bg').attr('src', url)
-		$('.maskDiv').css({zIndex:-1})
-	 })
+  function init(url) {
+    $('.maskDiv').css({ zIndex: 999 })
+    loadImage(url, function () {
+      $('#bg').attr('src', url)
+      $('.maskDiv').css({ zIndex: -1 })
+    })
   }
   function loadImage(url, callback) {
     var img = new Image(); //创建一个Image对象，实现图片的预下载
