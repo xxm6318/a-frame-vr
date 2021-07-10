@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>360全景看房-min.net.cn</title>
+  <meta name="description" content="360&deg; Image - A-Frame">
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/aframe/1.2.0/aframe.min.js"></script>
+  <style>
+    .thumb {
+      display: flex;
+      position: fixed;
+      width: 100%;
+      height: 80px;
+      bottom: 20px;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 10px;
+    }
+
+    .thumb div {
+      font-size: 16px;
+      color: #fff;
+      width: 80px;
+      height: 80px;
+      margin-right: 15px;
+      border: 1px solid #fff;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .thumb div img {
+      width: 80px;
+      height: 80px;
+      user-select: none;
+    }
+
+    .thumb div:hover {
+      border: 1px solid rgb(92, 153, 245);
+    }
+    .maskDiv{
+      position: fixed;
+      top:0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .maskDiv img{
+      width: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <a-scene>
+    <a-entity>
+      <a-sky src="" rotation="0 -130 0" id="bg"></a-sky>
+      <a-text value="min.net.cn" width="10" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" position="-2.5 0.25 -1.5"
+        rotation="0 15 0" id="info"></a-text>
+    </a-entity>
+    <a-animation attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite"></a-animation>
+  </a-scene>
+  <div class="thumb">
+    <div data-id="1"><img src="images/aa1.png" alt=""></div>
+    <div data-id="2"><img src="images/aa2.png" alt=""></div>
+    <div data-id="3"><img src="images/aa3.png" alt=""></div>
+    <div data-id="4"><img src="images/aa4.png" alt=""></div>
+    <div data-id="5"><img src="images/aa5.png" alt=""></div>
+  </div>
+  <div class="maskDiv"><img src="images/loading.svg" alt=""></div>
+</body>
+<script>
+  $('.maskDiv').css({zIndex:999})
+  var url = 'images/a1.jpg';
+  loadImage(url, function(){
+    $('#bg').attr('src', url)
+    $('.maskDiv').css({zIndex:-1})
+  })
+  $('.thumb').on('click', 'div', function () {
+    var url = 'images/a' + $(this).attr('data-id') + '.jpg';
+    $('.maskDiv').css({zIndex:999})
+    loadImage(url, function(){
+      $('#bg').attr('src', url)
+      $('.maskDiv').css({zIndex:-999})
+    })
+  })
+  function loadImage(url, callback) {
+    var img = new Image(); //创建一个Image对象，实现图片的预下载
+    img.src = url;
+
+    if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数
+      callback.call(img);
+      return; // 直接返回，不用再处理onload事件
+    }
+    img.onload = function () { //图片下载完毕时异步调用callback函数。
+      callback.call(img);//将回调函数的this替换为Image对象
+    };
+  };
+</script>
+
+</html>
